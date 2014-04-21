@@ -1,0 +1,38 @@
+{
+  "name": "datalytics",
+  "version": "0.0.1",
+  "homepage": "https://github.com/alvaromuir/datalytics",
+  "authors": [
+    "Alvaro Muir, @alvaromuir"
+  ],
+  "description": "Insight to informed media",
+  "main": "server.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "insight",
+    "dashboard",
+    "near-time",
+    "analytics",
+    "dmp",
+    "media"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "moment": "~2.6.0",
+    "modernizr": "~2.7.2"
+  }
+}

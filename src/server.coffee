@@ -3,11 +3,15 @@ restify   = require 'restify'
 bunyan		= require 'bunyan'
 
 routes    = require './routes'
+tools     = require './tools'
+
 
 dotenv.load()
 app_env =
 	port: parseInt process.env.port
 	name: process.env.name
+	db_host: process.env.db_host
+	db_name: process.env.db_name
 
 
 # initialize logger
@@ -37,7 +41,7 @@ server.on 'after', restify.auditLogger log: appLogger
 
 
 # Add routes
-routes server
+routes server, app_env.db_host, app_env.db_name
 
 server.listen app_env.port, () ->
   console.log '%s listening at %s', server.name, server.url

@@ -37,37 +37,7 @@
         return res.send(doc);
       });
     });
-    server.get('/api/placements/campaign/:campaign_id', function(req, res, next) {
-      return db.Placements.find({
-        Campaign: req.params.campaign_id
-      }, function(err, rslts) {
-        var count;
-        if (err) {
-          return err;
-        }
-        count = rslts.length;
-        return res.send({
-          total: count,
-          placements: rslts
-        });
-      });
-    });
-    server.get('/api/placements/site/:site', function(req, res, next) {
-      return db.Placements.find({
-        'Site (DFA)': req.params.site
-      }, function(err, rslts) {
-        var count;
-        if (err) {
-          return err;
-        }
-        count = rslts.length;
-        return res.send({
-          total: count,
-          placements: rslts
-        });
-      });
-    });
-    server.get('/api/placements/placement/:placement', function(req, res, next) {
+    server.get('/api/placements/:placement', function(req, res, next) {
       return db.Placements.find({
         'Placement': req.params.placement
       }, function(err, rslts) {
@@ -82,7 +52,76 @@
         });
       });
     });
-    server.get('/api/placements/group/:group', function(req, res, next) {
+    server.get('/api/campaigns', function(req, res, next) {
+      return db.Placements.distinct('Campaign', function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          campaigns: rslts
+        });
+      });
+    });
+    server.get('/api/campaigns/:campaign_id', function(req, res, next) {
+      return db.Placements.find({
+        Campaign: req.params.campaign_id
+      }, function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          placements: rslts
+        });
+      });
+    });
+    server.get('/api/sites', function(req, res, next) {
+      return db.Placements.distinct('Site (DFA)', function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          sites: rslts
+        });
+      });
+    });
+    server.get('/api/sites/:site', function(req, res, next) {
+      return db.Placements.find({
+        'Site (DFA)': req.params.site
+      }, function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          placements: rslts
+        });
+      });
+    });
+    server.get('/api/groups', function(req, res, next) {
+      return db.Placements.distinct('Placement Group', function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          'placement groups': rslts
+        });
+      });
+    });
+    server.get('/api/groups/:group', function(req, res, next) {
       return db.Placements.find({
         'Placement Group': req.params.group
       }, function(err, rslts) {
@@ -97,7 +136,20 @@
         });
       });
     });
-    server.get('/api/placements/tactic/:tactic', function(req, res, next) {
+    server.get('/api/tactics', function(req, res, next) {
+      return db.Placements.distinct('Placement Tactic', function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          'placement tactics': rslts
+        });
+      });
+    });
+    server.get('/api/tactics/:tactic', function(req, res, next) {
       return db.Placements.find({
         'Placement Tactic': req.params.tactic
       }, function(err, rslts) {
@@ -112,7 +164,20 @@
         });
       });
     });
-    return server.get('/api/placements/segment/:segment', function(req, res, next) {
+    server.get('/api/segments', function(req, res, next) {
+      return db.Placements.distinct('DMP Segment', function(err, rslts) {
+        var count;
+        if (err) {
+          return err;
+        }
+        count = rslts.length;
+        return res.send({
+          total: count,
+          'dmp segments': rslts
+        });
+      });
+    });
+    return server.get('/api/segments/:segment', function(req, res, next) {
       return db.Placements.find({
         'DMP Segment': req.params.segment
       }, function(err, rslts) {

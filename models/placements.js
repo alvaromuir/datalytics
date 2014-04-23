@@ -2,42 +2,37 @@
 (function() {
   module.exports = {
     model: {
-      title: String,
-      details: String,
-      dueDate: Date,
-      createdAt: {
-        type: Date
-      },
+      'Month': String,
+      'Campaign': String,
+      'Site (DFA)': Date,
+      'Placement': String,
+      'Placement Group': String,
+      'Placement Tactic': String,
+      'DMP Segment': String,
+      'Impressions': Number,
+      'Clicks': Number,
+      'CT TV LQS': Number,
+      'VT TV LQS': Number,
+      'Internet Orders': Number,
+      'TV Orders': Number,
+      'Internet AM CT Conversions': Number,
+      'Internet AM CT Conversions': Number,
+      'Internet NC CT Conversions': Number,
+      'Internet NC TV Conversions': Number,
+      'TV AM CT Conversions': Number,
+      'TV AM VT Conversions': Number,
+      'TV NC CT Conversions': Number,
+      'TV NC VT Conversions': Number,
       _id: false,
-      id: String,
-      completed: {
-        type: Boolean,
-        "default": false
-      }
+      id: String
     },
     methods: {},
-    validators: {
-      title: {
-        fn: function(val) {
-          return val.length > 3;
-        },
-        msg: 'Invalid title length.'
-      }
-    },
+    validators: {},
     virtuals: {},
     hooks: {
-      pre: {
-        save: function(next) {
-          if (!this.id) {
-            this.id = _str.slugify(this.title);
-          }
-          this.createdAt = Date.now();
-          return next();
-        }
-      },
+      pre: {},
       post: {}
-    },
-    jsonOmit: ['_id']
+    }
   };
 
 }).call(this);

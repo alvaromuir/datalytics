@@ -2,32 +2,32 @@
 
 module.exports =
 	model:
-		title: String
-		details: String
-		dueDate: Date
-		createdAt:
-			type: Date
+		'Month': String
+		'Campaign': String
+		'Site (DFA)': Date
+		'Placement': String
+		'Placement Group': String
+		'Placement Tactic': String
+		'DMP Segment': String
+		'Impressions': Number
+		'Clicks': Number
+		'CT TV LQS': Number
+		'VT TV LQS': Number
+		'Internet Orders': Number
+		'TV Orders': Number
+		'Internet AM CT Conversions': Number
+		'Internet AM CT Conversions': Number
+		'Internet NC CT Conversions': Number
+		'Internet NC TV Conversions': Number
+		'TV AM CT Conversions': Number
+		'TV AM VT Conversions': Number
+		'TV NC CT Conversions': Number
+		'TV NC VT Conversions': Number
 		_id: false
 		id: String
-		completed:
-			type: Boolean
-			default: false
-
 	methods: {}
-	validators:
-		title:
-			fn: (val) ->
-				val.length > 3
-			msg: 'Invalid title length.'
-
+	validators: {}
 	virtuals: {}
 	hooks:
-		pre:
-			save: (next) ->
-				this.id = _str.slugify this.title unless this.id
-				this.createdAt = Date.now()
-				next()
-
+		pre: {}
 		post: {}
-
-	jsonOmit: ['_id']

@@ -6,8 +6,6 @@ module.exports =
     email: String
     password: String
     avatar: String
-    _id: false
-    id: String
 
   methods: {}
   validators: {}

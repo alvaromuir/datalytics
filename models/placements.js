@@ -22,9 +22,7 @@
       'TV AM CT Conversions': Number,
       'TV AM VT Conversions': Number,
       'TV NC CT Conversions': Number,
-      'TV NC VT Conversions': Number,
-      _id: false,
-      id: String
+      'TV NC VT Conversions': Number
     },
     methods: {},
     validators: {},

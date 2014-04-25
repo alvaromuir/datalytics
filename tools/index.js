@@ -29,6 +29,12 @@
         return _.extend(modObj, modules);
       });
       return modObj;
+    },
+    capitalize: function(str) {
+      return _.capitalize(str);
+    },
+    singularize: function(str) {
+      return _.singularize(str);
     }
   };
 

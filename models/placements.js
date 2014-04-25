@@ -4,7 +4,7 @@
     model: {
       'Month': String,
       'Campaign': String,
-      'Site (DFA)': Date,
+      'Site (DFA)': String,
       'Placement': String,
       'Placement Group': String,
       'Placement Tactic': String,

@@ -8,9 +8,14 @@ models_array  = tools.loadModules models_dir
 modelsObj     = {}
 
 module.exports =
-  init: (host, name) ->
-    mongo_uri= 'mongodb://' + host + '/' + name
+  init: (host, name, port) ->
+    mongo_uri= 'mongodb://' + host
+    mongo_uri += ':' + port if port
+    mongo_uri += '/' + name
+
     mongoose.connect mongo_uri
+    
+    console.log 'datastore connected at ' + mongo_uri if process.env['NODE_ENV'] != 'production'
 
   status: () ->
     status = state: 'not ready'
@@ -23,5 +28,5 @@ module.exports =
       _.each models_array, (model, index) ->
         modelsObj[index] = mongoose.model index, mongoose.Schema(model.model)
       return modelsObj
-      
+
     return modelsObj

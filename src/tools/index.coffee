@@ -21,3 +21,9 @@ module.exports =
       _.extend modObj, modules
 
     return modObj
+
+  capitalize: (str) ->
+    return _.capitalize str
+
+  singularize: (str) ->
+    return _.singularize str

@@ -15,10 +15,17 @@
   modelsObj = {};
 
   module.exports = {
-    init: function(host, name) {
+    init: function(host, name, port) {
       var mongo_uri;
-      mongo_uri = 'mongodb://' + host + '/' + name;
-      return mongoose.connect(mongo_uri);
+      mongo_uri = 'mongodb://' + host;
+      if (port) {
+        mongo_uri += ':' + port;
+      }
+      mongo_uri += '/' + name;
+      mongoose.connect(mongo_uri);
+      if (process.env['NODE_ENV'] !== 'production') {
+        return console.log('datastore connected at ' + mongo_uri);
+      }
     },
     status: function() {
       var status;

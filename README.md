@@ -3,4 +3,5 @@ Alvaro Muir, @alvaromuir
 
 ToDo:
   - Salt sensitive information
-  - Add auth scheeme
+  - Add auth scheme
+  - Add tests

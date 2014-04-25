@@ -10,9 +10,14 @@
     "mongoose": "^3.8.8",
     "lodash": "^2.4.1",
     "underscore.string": "^2.3.3",
-    "underscore.inflections": "^0.2.1"
+    "underscore.inflections": "^0.2.1",
+    "moment": "^2.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "superagent": "^0.17.0",
+    "request": "^2.34.0"
+  },
   "scripts": {
     "test": "mocha"
   },

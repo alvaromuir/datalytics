@@ -5,22 +5,21 @@ bunyan		= require 'bunyan'
 routes    = require './routes'
 tools     = require './tools'
 
-
 dotenv.load()
-app_env =
-	port: parseInt process.env.port
-	name: process.env.name
-	db_host: process.env.db_host
+env =
+	app_host: process.env.app_host or '0.0.0.0'
+	app_port: parseInt process.env.app_port or 3000
+	app_name: process.env.app_name
+	db_host: process.env.db_host or 'localhost'
 	db_name: process.env.db_name
-
+	db_port: parseInt process.env.db_port or 27017
 
 # initialize logger
 appLogger = bunyan.createLogger
-	name: app_env.name + ' app server'
+	name: env.name + ' app server'
 	level: process.env.LOG_LEVEL || 'warn'
 	stream: process.stdout
 	serializers: bunyan.stdSerializers
-
 
 server = restify.createServer name: process.env.name
 
@@ -35,13 +34,16 @@ server.use (req, res, next) ->
   next()
 server.use restify.fullResponse()
 
-
 # Bunyan
 server.on 'after', restify.auditLogger log: appLogger
 
-
 # Add routes
-routes server, app_env.db_host, app_env.db_name
+routes server, env.db_host, env.db_name, env.db_port
 
-server.listen app_env.port, () ->
-  console.log '%s listening at %s', server.name, server.url
+# And here we go...
+server.listen env.app_port, env.app_host, () ->
+	console.log '%s listening at %s', server.name, server.url if process.env['NODE_ENV'] != 'production'
+
+
+module.exports = ->
+	return server

@@ -67,14 +67,15 @@
       res.send(resObj);
       return next();
     });
-    server.get('/api/placements', function(req, res, next) {
+    server.get('/api/placements/', function(req, res, next) {
       return db.Placements.find(function(err, rcrds) {
         var rslts;
         if (err) {
           return err;
         }
         rslts = rsltsObj(rcrds, 'placement', 'all');
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/placements/id/:id', function(req, res, next) {
@@ -83,11 +84,13 @@
           return err;
         }
         if (doc) {
-          return res.send(doc);
+          res.send(doc);
+          return next();
         } else {
-          return res.send({
+          res.send({
             error: 'record with id ' + req.params.id + ' not found'
           });
+          return next();
         }
       });
     });
@@ -100,7 +103,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'placement', req.params.placement);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/campaigns', function(req, res, next) {
@@ -110,10 +114,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total campaigns': count,
           campaigns: rslts
         });
+        return next();
       });
     });
     server.get('/api/campaigns/:campaign', function(req, res, next) {
@@ -125,7 +130,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'campaign', req.params.campaign);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/sites', function(req, res, next) {
@@ -135,10 +141,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total sites': count,
           sites: rslts
         });
+        return next();
       });
     });
     server.get('/api/sites/:site', function(req, res, next) {
@@ -150,7 +157,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'site', req.params.site);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/groups', function(req, res, next) {
@@ -160,10 +168,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total groups': count,
           'placement groups': rslts
         });
+        return next();
       });
     });
     server.get('/api/groups/:group', function(req, res, next) {
@@ -175,7 +184,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'group', req.params.group);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/tactics', function(req, res, next) {
@@ -185,10 +195,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total tactics': count,
           'placement tactics': rslts
         });
+        return next();
       });
     });
     server.get('/api/tactics/:tactic', function(req, res, next) {
@@ -200,7 +211,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'tactic', req.params.tactic);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/segments', function(req, res, next) {
@@ -210,10 +222,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total segments': count,
           'dmp segments': rslts
         });
+        return next();
       });
     });
     server.get('/api/segments/:segment', function(req, res, next) {
@@ -225,7 +238,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'segment', req.params.segment);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
     server.get('/api/months', function(req, res, next) {
@@ -235,10 +249,11 @@
           return err;
         }
         count = rslts.length;
-        return res.send({
+        res.send({
           'total months': count,
           'months': rslts
         });
+        return next();
       });
     });
     return server.get('/api/months/:month', function(req, res, next) {
@@ -250,7 +265,8 @@
           return err;
         }
         rslts = rsltsObj(rcrds, 'month', req.params.month);
-        return res.send(rslts);
+        res.send(rslts);
+        return next();
       });
     });
   };

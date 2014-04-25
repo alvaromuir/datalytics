@@ -52,11 +52,12 @@ module.exports = (server, db_host, db_name, db_port) ->
     res.send resObj
     next()
 
-  server.get '/api/placements', (req, res, next) ->
+  server.get '/api/placements/', (req, res, next) ->
     db.Placements.find (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'placement', 'all')
       res.send rslts
+      next()
 
   # result by id
   server.get '/api/placements/id/:id', (req, res, next) ->
@@ -64,8 +65,10 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       if doc
         res.send doc
+        next()
       else
         res.send error: 'record with id '+req.params.id+' not found'
+        next()
 
   # results by placement
   server.get '/api/placements/:placement', (req, res, next) ->
@@ -73,6 +76,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'placement', req.params.placement)
       res.send rslts
+      next()
 
   # list campaigns
   server.get '/api/campaigns', (req, res, next) ->
@@ -80,6 +84,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total campaigns': count, campaigns: rslts
+      next()
 
   # results by campaign
   server.get '/api/campaigns/:campaign', (req, res, next) ->
@@ -87,6 +92,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'campaign', req.params.campaign)
       res.send rslts
+      next()
 
   # list sites
   server.get '/api/sites', (req, res, next) ->
@@ -94,6 +100,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total sites': count, sites: rslts
+      next()
 
   # results by site (DFA)
   server.get '/api/sites/:site', (req, res, next) ->
@@ -101,6 +108,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'site', req.params.site)
       res.send rslts
+      next()
 
   # list groups
   server.get '/api/groups', (req, res, next) ->
@@ -108,6 +116,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total groups': count, 'placement groups': rslts
+      next()
 
   # results by group
   server.get '/api/groups/:group', (req, res, next) ->
@@ -115,6 +124,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'group', req.params.group)
       res.send rslts
+      next()
 
   # list tactics
   server.get '/api/tactics', (req, res, next) ->
@@ -122,6 +132,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total tactics': count, 'placement tactics': rslts
+      next()
 
   # results by tactic
   server.get '/api/tactics/:tactic', (req, res, next) ->
@@ -129,6 +140,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'tactic', req.params.tactic)
       res.send rslts
+      next()
 
   # list groups
   server.get '/api/segments', (req, res, next) ->
@@ -136,6 +148,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total segments': count, 'dmp segments': rslts
+      next()
 
   # results by segment
   server.get '/api/segments/:segment', (req, res, next) ->
@@ -143,6 +156,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'segment', req.params.segment)
       res.send rslts
+      next()
 
   # list months
   server.get '/api/months', (req, res, next) ->
@@ -150,6 +164,7 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       count = rslts.length
       res.send 'total months': count, 'months': rslts
+      next()
 
   # results by month
   server.get '/api/months/:month', (req, res, next) ->
@@ -157,3 +172,4 @@ module.exports = (server, db_host, db_name, db_port) ->
       return err if err
       rslts = rsltsObj(rcrds, 'month', req.params.month)
       res.send rslts
+      next()

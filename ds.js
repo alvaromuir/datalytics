@@ -40,7 +40,7 @@
     models: function() {
       if (_.isEmpty(modelsObj)) {
         _.each(models_array, function(model, index) {
-          return modelsObj[index] = mongoose.model(index, mongoose.Schema(model.model));
+          return modelsObj[index] = mongoose.model(index, mongoose.Schema(model.model), model.collection);
         });
         return modelsObj;
       }

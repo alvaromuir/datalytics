@@ -14,7 +14,7 @@ module.exports =
     mongo_uri += '/' + name
 
     mongoose.connect mongo_uri
-    
+
     console.log 'datastore connected at ' + mongo_uri if process.env['NODE_ENV'] != 'production'
 
   status: () ->
@@ -26,7 +26,7 @@ module.exports =
   models: () ->
     if _.isEmpty modelsObj
       _.each models_array, (model, index) ->
-        modelsObj[index] = mongoose.model index, mongoose.Schema(model.model)
+        modelsObj[index] = mongoose.model index, mongoose.Schema(model.model), model.collection
       return modelsObj
 
     return modelsObj

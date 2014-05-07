@@ -1,31 +1,54 @@
 # Application routes
 
 dataStore  = require './ds'
+_          = require 'lodash'
 
 rsltsObj = (rcrds, category, criteria) ->
   rslts = {}
   rslts[category]            = criteria
   rslts['placement count']   = rcrds.length
-  rslts['Impressions']       = 0
-  rslts['Clicks']            = 0
-  rslts['CT TV LQS']         = 0
-  rslts['VT TV LQS']         = 0
-  rslts['TV LQS']            = 0
+  rslts['MediaCostM']        = 0
+  rslts['ImpsM']             = 0
+  rslts['ClicksM']           = 0
+  rslts['Consumer - Homepage : Learn_Shop_Unique: Click-through Conversions'] = 0
+  rslts['Consumer - Homepage : Learn_Shop_Unique: View-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_FiOS TV: Click-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_FiOS TV: View-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_FiOS Internet: Click-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_FiOS Internet: View-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_CHSI: Click-through Conversions'] = 0
+  rslts['Consumer - Remarketing : Loop Qual Success_CHSI: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO CHSI Order - AM: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO CHSI Order - AM: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO CHSI Order - NC: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO CHSI Order - NC: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS Internet Order - AM: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS Internet Order - AM: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS Internet Order - NC: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS Internet Order - NC: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS TV Order - AM: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS TV Order - AM: View-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS TV Order - NC: Click-through Conversions'] = 0
+  rslts['Consumer - Order Confirmation : GO FiOS TV Order - NC: View-through Conversions'] = 0
+  rslts['Consumer - Homepage : VPM_2013: Click-through Conversions'] = 0
+  rslts['Consumer - Homepage : VPM_2013: View-through Conversions'] = 0
+  rslts['GoodVisitsM']       = 0
+  rslts['CTGoodVisitsM']     = 0
+  rslts['TVLQSm']            = 0
+  rslts['CTTVLQSm']          = 0
+  rslts['Total LQS']         = 0
+  rslts['TVOrdersM']         = 0
+  rslts['CTTVOrdersM']       = 0
   rslts['Internet Orders']   = 0
-  rslts['TV Orders']         = 0
+  rslts['CHSI Orders']       = 0
+  rslts['Total Orders']      = 0
+  rslts['Total VisitsM']     = 0
 
   for rcrd in rcrds
-    if not isNaN rcrd['Impressions']
-      rslts['Impressions']    += rcrd['Impressions']
-    rslts['Clicks']           += rcrd['Clicks'] if not isNaN rcrd['Clicks']
-    rslts['CT TV LQS']        += rcrd['CT TV LQS'] if not isNaN rcrd['CT TV LQS']
-    rslts['VT TV LQS']        += rcrd['VT TV LQS'] if not isNaN rcrd['VT TV LQS']
-    rslts['TV LQS']           += rcrd._doc['TV LQS'] if not isNaN rcrd._doc['TV LQS'] #._doc ?? not sure why i need this
-    rslts['Internet Orders']  += rcrd['Internet Orders'] if not isNaN rcrd['Internet Orders']
-    rslts['TV Orders']        += rcrd['TV Orders'] if not isNaN rcrd['TV Orders']
+    doc = rcrd._doc
+    _.forIn doc, (val, key) ->
+      rslts[key] += parseInt(doc[key]) if not isNaN doc[key]
 
-
-  rslts['Total Orders']      = rslts['Internet Orders'] + rslts['TV Orders']
   rslts['placements']        = rcrds
 
   return rslts
@@ -55,6 +78,7 @@ module.exports = (server, db_host, db_name, db_port) ->
   server.get '/api/placements/', (req, res, next) ->
     db.Placements.find (err, rcrds) ->
       return err if err
+      rslts = _.without rslts, ''
       rslts = rsltsObj(rcrds, 'placement', 'all')
       res.send rslts
       next()
@@ -82,6 +106,7 @@ module.exports = (server, db_host, db_name, db_port) ->
   server.get '/api/campaigns', (req, res, next) ->
     db.Placements.distinct 'Campaign', (err, rslts) ->
       return err if err
+      rslts = _.without rslts, ''
       count = rslts.length
       res.send 'total campaigns': count, campaigns: rslts
       next()
@@ -98,6 +123,7 @@ module.exports = (server, db_host, db_name, db_port) ->
   server.get '/api/sites', (req, res, next) ->
     db.Placements.distinct 'Site (DFA)', (err, rslts) ->
       return err if err
+      rslts = _.without rslts, ''
       count = rslts.length
       res.send 'total sites': count, sites: rslts
       next()
@@ -111,18 +137,19 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # list groups
-  server.get '/api/groups', (req, res, next) ->
-    db.Placements.distinct 'Placement Group', (err, rslts) ->
+  server.get '/api/mobile/tablet/tactic', (req, res, next) ->
+    db.Placements.distinct 'Mobile/Tablet Tactic', (err, rslts) ->
       return err if err
+      rslts = _.without rslts, ''
       count = rslts.length
-      res.send 'total groups': count, 'placement groups': rslts
+      res.send 'total mobile/tablic tacitcs': count, 'mobile/tablic tacitcs': rslts
       next()
 
   # results by group
-  server.get '/api/groups/:group', (req, res, next) ->
-    db.Placements.find 'Placement Group': req.params.group, (err, rcrds) ->
+  server.get '/api/mobile/tablet/tactic/:tacic', (req, res, next) ->
+    db.Placements.find 'Mobile/Tablet Tactic': req.params.tactic, (err, rcrds) ->
       return err if err
-      rslts = rsltsObj(rcrds, 'group', req.params.group)
+      rslts = rsltsObj(rcrds, 'mobile/tablic tacitc', req.params.tactic)
       res.send rslts
       next()
 
@@ -130,6 +157,7 @@ module.exports = (server, db_host, db_name, db_port) ->
   server.get '/api/tactics', (req, res, next) ->
     db.Placements.distinct 'Placement Tactic', (err, rslts) ->
       return err if err
+      rslts = _.without rslts, ''
       count = rslts.length
       res.send 'total tactics': count, 'placement tactics': rslts
       next()
@@ -159,17 +187,18 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # list months
-  server.get '/api/months', (req, res, next) ->
-    db.Placements.distinct 'Month', (err, rslts) ->
+  server.get '/api/dates', (req, res, next) ->
+    db.Placements.distinct 'Date', (err, rslts) ->
       return err if err
+      rslts = _.without rslts, ''
       count = rslts.length
-      res.send 'total months': count, 'months': rslts
+      res.send 'total dates': count, 'dates': rslts
       next()
 
   # results by month
-  server.get '/api/months/:month', (req, res, next) ->
-    db.Placements.find 'Month': req.params.month, (err, rcrds) ->
+  server.get '/api/dates/:date', (req, res, next) ->
+    db.Placements.find 'Date': req.params.date, (err, rcrds) ->
       return err if err
-      rslts = rsltsObj(rcrds, 'month', req.params.month)
+      rslts = rsltsObj(rcrds, 'date', req.params.date)
       res.send rslts
       next()

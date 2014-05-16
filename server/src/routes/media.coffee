@@ -1,6 +1,5 @@
 # Application routes
 
-dataStore  = require './ds'
 _          = require 'lodash'
 
 rsltsObj = (rcrds, category, criteria) ->
@@ -54,29 +53,10 @@ rsltsObj = (rcrds, category, criteria) ->
   return rslts
 
 
-module.exports = (server, db_host, db_name, db_port) ->
-  # initialize database
-  dataStore.init(db_host, db_name, db_port)
-  db = dataStore.models()
+module.exports = (server, db) ->
 
-  # Just a test, move along. Nothing to see here
-  server.get '/hello/:name', (req, res, next) ->
-    res.send
-      hello: req.params.name
-      date: new Date
-    next()
-
-  server.get '/', (req, res, next) ->
-    resObj =
-      sever: process.env.app_name
-      remote: req.connection.remoteAddress
-      date: new Date
-      msg: 'for more info, try @alvaromuir'
-    res.send resObj
-    next()
-
-  server.get '/api/placements/', (req, res, next) ->
-    db.Placements.find (err, rcrds) ->
+  server.get '/api/media/placements/', (req, res, next) ->
+    db.Media.find (err, rcrds) ->
       return err if err
       rslts = _.without rslts, ''
       rslts = rsltsObj(rcrds, 'placement', 'all')
@@ -84,8 +64,8 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # result by id
-  server.get '/api/placements/id/:id', (req, res, next) ->
-    db.Placements.findById req.params.id, (err, doc) ->
+  server.get '/api/media/placements/id/:id', (req, res, next) ->
+    db.Media.findById req.params.id, (err, doc) ->
       return err if err
       if doc
         res.send doc
@@ -95,16 +75,16 @@ module.exports = (server, db_host, db_name, db_port) ->
         next()
 
   # results by placement
-  server.get '/api/placements/:placement', (req, res, next) ->
-    db.Placements.find 'Placement': req.params.placement, (err, rcrds) ->
+  server.get '/api/media/placements/:placement', (req, res, next) ->
+    db.Media.find 'Placement': req.params.placement, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'placement', req.params.placement)
       res.send rslts
       next()
 
   # list campaigns
-  server.get '/api/campaigns', (req, res, next) ->
-    db.Placements.distinct 'Campaign', (err, rslts) ->
+  server.get '/api/media/campaigns', (req, res, next) ->
+    db.Media.distinct 'Campaign', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
@@ -112,16 +92,16 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # results by campaign
-  server.get '/api/campaigns/:campaign', (req, res, next) ->
-    db.Placements.find Campaign: req.params.campaign, (err, rcrds) ->
+  server.get '/api/media/campaigns/:campaign', (req, res, next) ->
+    db.Media.find Campaign: req.params.campaign, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'campaign', req.params.campaign)
       res.send rslts
       next()
 
   # list sites
-  server.get '/api/sites', (req, res, next) ->
-    db.Placements.distinct 'Site (DFA)', (err, rslts) ->
+  server.get '/api/media/sites', (req, res, next) ->
+    db.Media.distinct 'Site (DFA)', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
@@ -129,16 +109,16 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # results by site (DFA)
-  server.get '/api/sites/:site', (req, res, next) ->
-    db.Placements.find 'Site (DFA)': req.params.site, (err, rcrds) ->
+  server.get '/api/media/sites/:site', (req, res, next) ->
+    db.Media.find 'Site (DFA)': req.params.site, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'site', req.params.site)
       res.send rslts
       next()
 
   # list groups
-  server.get '/api/mobile/tablet/tactic', (req, res, next) ->
-    db.Placements.distinct 'Mobile/Tablet Tactic', (err, rslts) ->
+  server.get '/api/media/mobile/tablet/tactic', (req, res, next) ->
+    db.Media.distinct 'Mobile/Tablet Tactic', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
@@ -146,16 +126,16 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # results by group
-  server.get '/api/mobile/tablet/tactic/:tacic', (req, res, next) ->
-    db.Placements.find 'Mobile/Tablet Tactic': req.params.tactic, (err, rcrds) ->
+  server.get '/api/media/mobile/tablet/tactic/:tacic', (req, res, next) ->
+    db.Media.find 'Mobile/Tablet Tactic': req.params.tactic, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'mobile/tablic tacitc', req.params.tactic)
       res.send rslts
       next()
 
   # list tactics
-  server.get '/api/tactics', (req, res, next) ->
-    db.Placements.distinct 'Placement Tactic', (err, rslts) ->
+  server.get '/api/media/tactics', (req, res, next) ->
+    db.Media.distinct 'Placement Tactic', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
@@ -163,32 +143,32 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # results by tactic
-  server.get '/api/tactics/:tactic', (req, res, next) ->
-    db.Placements.find 'Placement Tactic': req.params.tactic, (err, rcrds) ->
+  server.get '/api/media/tactics/:tactic', (req, res, next) ->
+    db.Media.find 'Placement Tactic': req.params.tactic, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'tactic', req.params.tactic)
       res.send rslts
       next()
 
   # list groups
-  server.get '/api/segments', (req, res, next) ->
-    db.Placements.distinct 'DMP Segment', (err, rslts) ->
+  server.get '/api/media/segments', (req, res, next) ->
+    db.Media.distinct 'DMP Segment', (err, rslts) ->
       return err if err
       count = rslts.length
       res.send 'total segments': count, 'dmp segments': rslts
       next()
 
   # results by segment
-  server.get '/api/segments/:segment', (req, res, next) ->
-    db.Placements.find 'DMP Segment': req.params.segment, (err, rcrds) ->
+  server.get '/api/media/segments/:segment', (req, res, next) ->
+    db.Media.find 'DMP Segment': req.params.segment, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'segment', req.params.segment)
       res.send rslts
       next()
 
   # list months
-  server.get '/api/dates', (req, res, next) ->
-    db.Placements.distinct 'Date', (err, rslts) ->
+  server.get '/api/media/dates', (req, res, next) ->
+    db.Media.distinct 'Date', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
@@ -196,8 +176,8 @@ module.exports = (server, db_host, db_name, db_port) ->
       next()
 
   # results by month
-  server.get '/api/dates/:date', (req, res, next) ->
-    db.Placements.find 'Date': req.params.date, (err, rcrds) ->
+  server.get '/api/media/dates/:date', (req, res, next) ->
+    db.Media.find 'Date': req.params.date, (err, rcrds) ->
       return err if err
       rslts = rsltsObj(rcrds, 'date', req.params.date)
       res.send rslts

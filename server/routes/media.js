@@ -239,7 +239,7 @@
         return next();
       });
     });
-    server.get('/api/media/dates', function(req, res, next) {
+    server.get('/api/media/months', function(req, res, next) {
       return db.Media.distinct('Date', function(err, rslts) {
         var count;
         if (err) {
@@ -248,13 +248,13 @@
         rslts = _.without(rslts, '');
         count = rslts.length;
         res.send({
-          'total dates': count,
-          'dates': rslts
+          'total months': count,
+          'months': rslts
         });
         return next();
       });
     });
-    return server.get('/api/media/dates/:date', function(req, res, next) {
+    return server.get('/api/media/months/:date', function(req, res, next) {
       return db.Media.find({
         'Date': req.params.date
       }, function(err, rcrds) {
@@ -262,7 +262,7 @@
         if (err) {
           return err;
         }
-        rslts = rsltsObj(rcrds, 'date', req.params.date);
+        rslts = rsltsObj(rcrds, 'month', req.params.date);
         res.send(rslts);
         return next();
       });

@@ -79,6 +79,7 @@ module.exports = (grunt) ->
           ".tmp/styles/{,*/}*.css"
           "<%= config.app %>/images/{,*/}*"
           "<%= config.app %>/scripts/{,*/}*"
+          "./Gruntfile.coffee"
         ]
 
 
@@ -183,7 +184,7 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          cwd: "<%= config.app %>/styles"
+          cwd: "<%= config.src %>/styles"
           src: ["*.scss"]
           dest: ".tmp/styles"
           ext: ".css"
@@ -192,7 +193,7 @@ module.exports = (grunt) ->
       server:
         files: [
           expand: true
-          cwd: "<%= config.app %>/styles"
+          cwd: "<%= config.src %>/styles"
           src: ["*.scss"]
           dest: ".tmp/styles"
           ext: ".css"
@@ -360,7 +361,7 @@ module.exports = (grunt) ->
       styles:
         expand: true
         dot: true
-        cwd: "<%= config.app %>/styles"
+        cwd: "<%= config.src %>/styles"
         dest: ".tmp/styles/"
         src: "{,*/}*.css"
 

@@ -1,27 +1,19 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700|Radley);
-
-
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
-
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
 
 .content {
   width: 95%;
   margin: 0 auto 50px auto;
   font-family: 'Source Sans Pro', 'sans-serif';
-  font-weight: 400;
-}
+  font-weight: 400; }
 
 h1 {
-  font-family: 'Radley', 'serif';
-}
-
+  font-family: 'Radley', 'serif'; }
 
 .meter {
   width: 210px;
-  text-align: center;
-}
+  text-align: center; }

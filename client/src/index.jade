@@ -36,11 +36,16 @@ html.no-js(lang='en', ng-app='myApp')
 
     .content
       div(ng-controller='dfpSitesController')
+        .drr-meter
+          H1 DRR
         .placements
-          p placements count: {{placements['placement count']}}
+          p placements count:
+            span(ng-bind="placements['placement count']")
+          p TV LQS:
+            span(ng-bind="placements['Total LQS'] / 20")
+        .meter
+          img.arc(src='/images/meter.svg')
 
-      .chart
-        
 
 
 

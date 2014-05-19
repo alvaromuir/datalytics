@@ -167,18 +167,18 @@ module.exports = (server, db) ->
       next()
 
   # list months
-  server.get '/api/media/dates', (req, res, next) ->
+  server.get '/api/media/months', (req, res, next) ->
     db.Media.distinct 'Date', (err, rslts) ->
       return err if err
       rslts = _.without rslts, ''
       count = rslts.length
-      res.send 'total dates': count, 'dates': rslts
+      res.send 'total months': count, 'months': rslts
       next()
 
   # results by month
-  server.get '/api/media/dates/:date', (req, res, next) ->
+  server.get '/api/media/months/:date', (req, res, next) ->
     db.Media.find 'Date': req.params.date, (err, rcrds) ->
       return err if err
-      rslts = rsltsObj(rcrds, 'date', req.params.date)
+      rslts = rsltsObj(rcrds, 'month', req.params.date)
       res.send rslts
       next()

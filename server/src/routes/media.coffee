@@ -1,6 +1,7 @@
 # Application routes
 
-_          = require 'lodash'
+_        = require 'lodash'
+utils    = require '../tools'
 
 rsltsObj = (rcrds, category, criteria) ->
   rslts = {}
@@ -54,7 +55,7 @@ rsltsObj = (rcrds, category, criteria) ->
 
 
 module.exports = (server, db) ->
-
+  # all placements
   server.get '/api/media/placements/', (req, res, next) ->
     db.Media.find (err, rcrds) ->
       return err if err

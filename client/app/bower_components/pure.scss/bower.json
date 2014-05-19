@@ -1,0 +1,12 @@
+{
+  "name": "pure.scss",
+  "version": "0.3.0",
+  "main":["_pure.scss"],
+  "ignore": [
+    "build.sh",
+    ".gitignore"
+  ],
+  "devDependencies": {
+    "normalize-css": "1.1.2"
+  }
+}

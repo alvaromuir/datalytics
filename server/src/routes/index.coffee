@@ -1,12 +1,17 @@
-dataStore  = require '../ds'
-media      = require './media'
-audiences   = require './audiences'
+dataStore      = require '../ds'
+business_days  = require './business_days'
+media          = require './media'
+audiences      = require './audiences'
+
+
 
 module.exports = (server, db_host, db_name, db_port) ->
+
   # initialize database
   dataStore.init(db_host, db_name, db_port)
   db = dataStore.models()
 
+  business_days server, db
   media server, db
   audiences server, db
 

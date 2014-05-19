@@ -1,8 +1,10 @@
 # App utils
 fs      = require 'fs'
 path    = require 'path'
+moment  = require 'moment'
 _       = require 'lodash'
 _str    = require 'underscore.string'
+
 
 
 _.mixin _str.exports()
@@ -27,3 +29,6 @@ module.exports =
 
   singularize: (str) ->
     return _.singularize str
+
+  currentMonth: () ->
+    return moment().format('MMM')

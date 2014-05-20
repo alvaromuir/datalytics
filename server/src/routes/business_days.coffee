@@ -16,9 +16,9 @@ module.exports = (server, db) ->
 
   # all business days for specific month
   server.get '/api/media/business_days/year/:year/month/:month', (req, res, next) ->
-    db.Business_day.find {year: req.params.year, month: req.params.month}, (err, rslts) ->
+    db.Business_day.findOne {year: req.params.year, month: req.params.month}, (err, doc) ->
       return err if err
-      res.send rslts
+      res.send doc
 
   # all business days for specific month, regardless of year
   server.get '/api/media/business_days/month/:month', (req, res, next) ->

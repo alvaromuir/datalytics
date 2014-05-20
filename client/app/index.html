@@ -39,8 +39,10 @@
           <H1>DRR</H1>
         </div>
         <div class="placements">
-          <p>placements count:<span ng-bind="placements['placement count']"></span></p>
-          <p>TV LQS:<span ng-bind="placements['Total LQS'] / 20"></span></p>
+          <p>placements count: &nbsp;<span ng-bind="placements['placement count']"></span></p>
+          <p>TV LQS: &nbsp;<span ng-bind="placements['Total LQS']"></span></p>
+          <p>Business Days: &nbsp;<span ng-bind="business_days['days']"></span></p>
+          <p>DRR: &nbsp;<span ng-bind="placements['Total LQS'] / business_days['days'] | number : 0"></span></p>
         </div>
         <div class="meter"><img src="/images/meter.svg" class="arc"></div>
       </div>

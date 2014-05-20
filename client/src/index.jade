@@ -39,10 +39,14 @@ html.no-js(lang='en', ng-app='myApp')
         .drr-meter
           H1 DRR
         .placements
-          p placements count:
+          p placements count: &nbsp;
             span(ng-bind="placements['placement count']")
-          p TV LQS:
-            span(ng-bind="placements['Total LQS'] / 20")
+          p TV LQS: &nbsp;
+            span(ng-bind="placements['Total LQS']")
+          p Business Days: &nbsp;
+            span(ng-bind="business_days['days']")
+          p DRR: &nbsp;
+            span(ng-bind="placements['Total LQS'] / business_days['days'] | number : 0")
         .meter
           img.arc(src='/images/meter.svg')
 

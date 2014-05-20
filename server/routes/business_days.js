@@ -20,14 +20,14 @@
       });
     });
     server.get('/api/media/business_days/year/:year/month/:month', function(req, res, next) {
-      return db.Business_day.find({
+      return db.Business_day.findOne({
         year: req.params.year,
         month: req.params.month
-      }, function(err, rslts) {
+      }, function(err, doc) {
         if (err) {
           return err;
         }
-        return res.send(rslts);
+        return res.send(doc);
       });
     });
     server.get('/api/media/business_days/month/:month', function(req, res, next) {

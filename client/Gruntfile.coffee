@@ -33,7 +33,7 @@ module.exports = (grunt) ->
     watch:
       bower:
         files: ["bower.json"]
-        tasks: ["bowerInstall"]
+        tasks: ["bower"]
 
       js:
         files: ["<%= config.app %>/scripts/{,*/}*.js"]
@@ -61,7 +61,7 @@ module.exports = (grunt) ->
 
       jade:
         files: ["<%= config.src %>/{,*/}*.jade"]
-        tasks: ["jade:html", "bowerInstall"]
+        tasks: ["jade:html"]
 
       styles:
         files: ["<%= config.app %>/styles/{,*/}*.css"]
@@ -117,7 +117,7 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [
               connect.static(".tmp")
-              connect().use("/bower_components", connect.static("./bower_components"))
+              connect().use("<%= config.app %>/vendor", connect.static("<%= config.app %>/vendor"))
               connect.static(config.app)
             ]
 
@@ -129,7 +129,7 @@ module.exports = (grunt) ->
             [
               connect.static(".tmp")
               connect.static("test")
-              connect().use("/bower_components", connect.static("./bower_components"))
+              connect().use("<%= config.app %>/vendor", connect.static("<%= config.app %>/vendor"))
               connect.static(config.app)
             ]
 
@@ -219,18 +219,9 @@ module.exports = (grunt) ->
     https://github.com/yatskevich/grunt-bower-task
     ###
     bower:
-      install:"./bower_components/"
-
-
-    # Automatically inject Bower components into the HTML file
-    bowerInstall:
-      app:
-        src: ["<%= config.app %>/index.html"]
-        exclude: [""]
-
-      sass:
-        src: ["<%= config.app %>/styles/{,*/}*.{scss,sass}"]
-
+      install:
+        options:
+          targetDir:"<%= config.app %>/vendor"
 
     # Renames files for browser caching purposes
     rev:
@@ -370,7 +361,7 @@ module.exports = (grunt) ->
     # reference in your app
     modernizr:
       dist:
-        devFile: "bower_components/modernizr/modernizr.js"
+        devFile: "<%= config.app %>/vendor/modernizr/modernizr.js"
         outputFile: "<%= config.dist %>/scripts/vendor/modernizr.js"
         files:
           src: [
@@ -403,10 +394,10 @@ module.exports = (grunt) ->
         "connect:dist:keepalive"
       ])
     grunt.task.run [
+      "bower"
       "coffee"
       "sass"
       "jade"
-      "bowerInstall"
       "clean:server"
       "concurrent:server"
       "autoprefixer"

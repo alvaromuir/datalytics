@@ -2,14 +2,16 @@
   "name": "dataviz-sandbox",
   "private": true,
   "dependencies": {
+    "angular": "~1.2.16",
+    "d3": "~3.4.6",
     "jquery": "~1.11.0",
     "lodash": "~2.4.1",
     "modernizr": "~2.6.2",
     "moment": "~2.6.0",
-    "snap.svg": "~0.2.0",
-    "d3": "~3.4.6",
-    "angular": "~1.2.16",
-    "pure": "~0.4.2"
+    "pure": "~0.4.2",
+    "requirejs": "~2.1.11",
+    "requirejs-domready": "~2.0.1",
+    "angular-resource": "~1.2.16"
   },
   "devDependencies": {
     "chai": "~1.9.1",

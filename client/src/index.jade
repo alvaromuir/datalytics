@@ -1,31 +1,29 @@
 doctype html
-html.no-js(lang='en', ng-app='myApp')
+html.no-js(lang='en')
   head
     meta(charset='utf-8')
     title datalytics
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='shortcut icon', href='/favicon.ico')
-    // Place favicon.ico and apple-touch-icon.png in the root directory
-    // build:css styles/vendor.css
-    // bower:css
-    // endbower
-    // endbuild
+    //- // build:css styles/vendor.css
+    //- // bower:css
+    //- // endbower
+    //- // endbuild
     // build:css(.tmp) styles/main.css
     link(rel='stylesheet', href='styles/main.css')
     // endbuild
     // build:js scripts/vendor/modernizr.js
-    .script(src='../bower_components/modernizr/modernizr.js')
+    .script(src='/vendor/modernizr/modernizr.js')
     // endbuild
-    // build:js scripts/vendor.js
-    .script(src='../bower_components/jquery/dist/jquery.js')
+    //- // build:js scripts/vendor.js
+    //-
+    //- // bower:js
+    //-
+    //- // endbower
+    //- // endbuild
 
-    // bower:js
-
-    // endbower
-    // endbuild
-
-  body
+  body.home-page(ng-controller="RootController")
     //if lt IE 10
       p.browsehappy
         | You are using an
@@ -40,16 +38,17 @@ html.no-js(lang='en', ng-app='myApp')
           H1 DRR
         .placements
           p placements count: &nbsp;
-            span(ng-bind="placements['placement count']")
+            span(ng-bind="placements['placement count'] | number : 0")
           p TV LQS: &nbsp;
-            span(ng-bind="placements['Total LQS']")
+            span(ng-bind="placements['Total LQS'] | number : 0")
           p Business Days: &nbsp;
-            span(ng-bind="business_days['days']")
+            span(ng-bind="business_days['days'] | number : 0")
           p DRR: &nbsp;
             span(ng-bind="placements['Total LQS'] / business_days['days'] | number : 0")
         .meter
-          img.arc(src='/images/meter.svg')
-
+          span.arc(ng-include="'/images/meter.svg'")
+          input.bar(type="range", min="-90", max="90", ng-model="drr_slider.rotation", ng-change="calc_angle(drr_slider)")
+          p {{drr_slider.rotation}} &deg;
 
 
 
@@ -61,5 +60,5 @@ html.no-js(lang='en', ng-app='myApp')
     //-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     //-   ga('create', 'UA-12345678', 'minorev.com');ga('send', 'pageview');
     // build:js({app,.tmp}) scripts/main.js
-    script(src='./scripts/controllers.js')
+    script(data-main='./scripts/main', src='/vendor/requirejs/require.js')
     // endbuild

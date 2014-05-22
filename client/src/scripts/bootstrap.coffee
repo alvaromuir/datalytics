@@ -1,7 +1,8 @@
 # Angular bootstrap; Utilized require's domReady
 
-define ['angular', 'app', 'domReady'], (ng, domReady) ->
+define ['angular', 'domReady'], (angular, domReady) ->
   'use strict'
 
-  require ['domReady!'], (document) ->
-    ng.bootstrap document, ['app']
+  domReady ->
+    # console.log 'test'
+    angular.bootstrap document, ['datalytics']

@@ -1,7 +1,9 @@
 (function() {
-  require(['config', 'app'], function(config, app) {
+  require(['config'], function(config) {
     requirejs.config(config);
-    return app();
+    return require(['app', 'controllers/dmp'], function(app) {
+      return require(['bootstrap'], function() {});
+    });
   });
 
 }).call(this);

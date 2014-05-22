@@ -13,10 +13,10 @@
     <div src="/vendor/modernizr/modernizr.js" class="script"></div>
     <!-- endbuild-->
   </head>
-  <body ng-controller="RootController" class="home-page"><!--[if lt IE 10]>
+  <body><!--[if lt IE 10]>
     <p class="browsehappy">You are using an<strong>outdated</strong>browser. Please<a href="http://browsehappy.com/">upgrade your browser</a>to improve your experience.</p><![endif]-->
     <div class="content">
-      <div ng-controller="dfpSitesController">
+      <div ng-controller="dmpController">
         <div class="drr-meter">
           <H1>DRR</H1>
         </div>
@@ -26,9 +26,7 @@
           <p>Business Days: &nbsp;<span ng-bind="business_days['days'] | number : 0"></span></p>
           <p>DRR: &nbsp;<span ng-bind="placements['Total LQS'] / business_days['days'] | number : 0"></span></p>
         </div>
-        <div class="meter"><span ng-include="'/images/meter.svg'" class="arc"></span>
-          <input type="range" min="-90" max="90" ng-model="drr_slider.rotation" ng-change="calc_angle(drr_slider)" class="bar">
-          <p>{{drr_slider.rotation}} &deg;</p>
+        <div class="meter">
         </div>
       </div>
     </div>

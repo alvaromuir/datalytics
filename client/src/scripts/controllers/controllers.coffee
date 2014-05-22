@@ -1,1 +1,2 @@
-define ['angular'], (angular) ->  'use strict';  angular.module 'controllers', []
+define ['angular'], (angular) ->
+  angular.module 'controllers', []

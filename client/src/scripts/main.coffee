@@ -1,3 +1,5 @@
-require ['config', 'app'], (config, app) ->
+require ['config'], (config) ->
   requirejs.config(config)
-  app()
+
+  require ['app','controllers/dmp'], (app) ->
+    require ['bootstrap'], () ->

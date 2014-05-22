@@ -23,7 +23,7 @@ html.no-js(lang='en')
     //- // endbower
     //- // endbuild
 
-  body.home-page(ng-controller="RootController")
+  body
     //if lt IE 10
       p.browsehappy
         | You are using an
@@ -33,7 +33,7 @@ html.no-js(lang='en')
         | to improve your experience.
 
     .content
-      div(ng-controller='dfpSitesController')
+      div(ng-controller='dmpController')
         .drr-meter
           H1 DRR
         .placements
@@ -46,9 +46,9 @@ html.no-js(lang='en')
           p DRR: &nbsp;
             span(ng-bind="placements['Total LQS'] / business_days['days'] | number : 0")
         .meter
-          span.arc(ng-include="'/images/meter.svg'")
-          input.bar(type="range", min="-90", max="90", ng-model="drr_slider.rotation", ng-change="calc_angle(drr_slider)")
-          p {{drr_slider.rotation}} &deg;
+          //- span.arc(ng-include="'/images/meter.svg'")
+          //- input.bar(type="range", min="-90", max="90", ng-model="drr_slider.rotation", ng-change="calc_angle(drr_slider)")
+          //- p {{drr_slider.rotation}} &deg;
 
 
 

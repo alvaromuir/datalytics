@@ -15,7 +15,7 @@ require.config
       exports: '_'
 
     'angular':
-      deps: ['d3', 'jquery', 'moment']
+      deps: ['jquery']
       exports: 'angular'
 
     'angularResource':

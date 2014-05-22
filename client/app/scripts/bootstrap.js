@@ -1,8 +1,8 @@
 (function() {
-  define(['angular', 'app', 'domReady'], function(ng, domReady) {
+  define(['angular', 'domReady'], function(angular, domReady) {
     'use strict';
-    return require(['domReady!'], function(document) {
-      return ng.bootstrap(document, ['app']);
+    return domReady(function() {
+      return angular.bootstrap(document, ['datalytics']);
     });
   });
 
